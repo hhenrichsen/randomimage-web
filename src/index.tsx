@@ -131,13 +131,11 @@ app.get(`${base}/random`, (c) => {
   const prefix = c.req.query("prefix");
   const timer = c.req.query("timer");
 
-  // If specific image requested, show it
+  // If specific image requested, try to show it
   if (img) {
+    try {
     const imagePath = `${root}/${img}`;
-    if (!fs.existsSync(imagePath)) {
-      c.status(404);
-      return c.text("Not Found");
-    }
+      if (fs.existsSync(imagePath) && fs.statSync(imagePath).isFile()) {
     const urlParams = new URLSearchParams();
     urlParams.set("img", img);
     if (prefix) urlParams.set("prefix", prefix);
@@ -147,8 +145,15 @@ app.get(`${base}/random`, (c) => {
       <Image base={base} src={img} prefix={prefix} timer={timer} />
     );
   }
+      // Image doesn't exist or is a directory - fall through to get a random one
+      console.log("Image not found or is directory, getting random:", img);
+    } catch (error) {
+      console.error("Error checking image:", error);
+      // Fall through to get a random one
+    }
+  }
 
-  // Otherwise get random image
+  // Get random image
   const searchRoot = root + (prefix ? "/" + prefix : "");
   const image = recurseToImage(searchRoot);
   if (!image || !fs.existsSync(image)) {
@@ -172,13 +177,11 @@ app.get(`${base}/ref/random`, (c) => {
   const prefix = c.req.query("prefix");
   const timer = c.req.query("timer");
 
-  // If specific image requested, show it
+  // If specific image requested, try to show it
   if (img) {
+    try {
     const imagePath = `${refroot}/${img}`;
-    if (!fs.existsSync(imagePath)) {
-      c.status(404);
-      return c.text("Not Found");
-    }
+      if (fs.existsSync(imagePath) && fs.statSync(imagePath).isFile()) {
     const urlParams = new URLSearchParams();
     urlParams.set("img", img);
     if (prefix) urlParams.set("prefix", prefix);
@@ -188,8 +191,15 @@ app.get(`${base}/ref/random`, (c) => {
       <Image base={base + "/ref"} src={img} prefix={prefix} timer={timer} />
     );
   }
+      // Image doesn't exist or is a directory - fall through to get a random one
+      console.log("Image not found or is directory, getting random:", img);
+    } catch (error) {
+      console.error("Error checking image:", error);
+      // Fall through to get a random one
+    }
+  }
 
-  // Otherwise get random image
+  // Get random image
   const searchRoot = refroot + (prefix ? "/" + prefix : "");
   const image = recurseToImage(searchRoot);
   if (!image || !fs.existsSync(image)) {
