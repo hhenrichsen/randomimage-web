@@ -140,11 +140,11 @@ export function Image({
 
   return (
     <div
-      class="flex flex-1 flex-col items-center max-w-full"
+      class="flex flex-1 flex-col items-center w-full"
       id="image"
       x-data={timerScript}
     >
-      <div class="flex items-center gap-2 mb-1 max-w-full">
+      <div class="flex items-center gap-2 mb-1 w-full">
         <button
           hx-get={`${base}/prev?img=${encodeURIComponent(src)}${
             prefix ? `&prefix=${encodeURIComponent(prefix)}` : ""
@@ -227,7 +227,7 @@ background-size: contain;
 background-repeat: no-repeat;`}
         />
       </div>
-      <div class="max-w-full flex flex-col gap-2 mt-2 self-stretch">
+      <div class="w-full flex flex-col gap-2 mt-2">
         <div
           class="p-3 bg-white dark:bg-zinc-900 text-xs"
           x-bind:class="selectedPrefix ? 'visible' : 'invisible'"

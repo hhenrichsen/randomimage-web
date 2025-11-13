@@ -28,11 +28,12 @@ export default function App({
         <link rel="preconnect" href="https://rsms.me/" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
         <style>{`
-          * { font-family: 'Inter', sans-serif; }
-          @supports (font-variation-settings: normal) {
-            * { font-family: 'Inter var', sans-serif; }
-          }
-        `}</style>
+        html, body { height: 100%; margin: 0; padding: 0; }
+        * { font-family: 'Inter', sans-serif; }
+        @supports (font-variation-settings: normal) {
+          * { font-family: 'Inter var', sans-serif; }
+        }
+      `}</style>
         <script
           src="https://unpkg.com/htmx.org@1.9.12"
           integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
@@ -46,7 +47,7 @@ export default function App({
           crossorigin="anonymous"
         ></script>
       </head>
-      <body class="w-full h-full m-0 dark:bg-zinc-900 font-sans text-zinc-900 dark:text-zinc-100 flex items-center flex-col p-4">
+      <body class="w-full h-screen m-0 dark:bg-zinc-900 font-sans text-zinc-900 dark:text-zinc-100 flex flex-col p-4">
         <style>{`
           * {
             -webkit-tap-highlight-color: transparent !important;
@@ -69,7 +70,7 @@ export default function App({
         `}</style>
         <div
           id="image"
-          class="flex items-center justify-center flex-1 w-full max-h-full flex-col"
+          class="flex flex-1 w-full flex-col"
           hx-get={initialUrl}
           hx-trigger="load once"
           hx-push-url="false"
