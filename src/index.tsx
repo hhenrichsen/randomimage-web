@@ -72,11 +72,19 @@ app.use(async (c, next) => {
 });
 
 app.get(base, (c) => {
-  return c.html(<App prefix={c.req.query("prefix")} img={c.req.query("img")} base={base} />);
+  return c.html(
+    <App prefix={c.req.query("prefix")} img={c.req.query("img")} base={base} />
+  );
 });
 
 app.get(`${base}/ref`, (c) => {
-  return c.html(<App prefix={c.req.query("prefix")} img={c.req.query("img")} base={base + "/ref"} />);
+  return c.html(
+    <App
+      prefix={c.req.query("prefix")}
+      img={c.req.query("img")}
+      base={base + "/ref"}
+    />
+  );
 });
 
 app.get(`${base}/img/:path{.*}`, (c) => {
@@ -121,7 +129,8 @@ app.get(`${base}/random`, (c) => {
   console.log("HANDLE\t/random");
   const img = c.req.query("img");
   const prefix = c.req.query("prefix");
-  
+  const timer = c.req.query("timer");
+
   // If specific image requested, show it
   if (img) {
     const imagePath = `${root}/${img}`;
@@ -132,10 +141,13 @@ app.get(`${base}/random`, (c) => {
     const urlParams = new URLSearchParams();
     urlParams.set("img", img);
     if (prefix) urlParams.set("prefix", prefix);
+    if (timer) urlParams.set("timer", timer);
     c.header("HX-Push-Url", `${base}?${urlParams.toString()}`);
-    return c.html(<Image base={base} src={img} prefix={prefix} />);
+    return c.html(
+      <Image base={base} src={img} prefix={prefix} timer={timer} />
+    );
   }
-  
+
   // Otherwise get random image
   const searchRoot = root + (prefix ? "/" + prefix : "");
   const image = recurseToImage(searchRoot);
@@ -147,15 +159,19 @@ app.get(`${base}/random`, (c) => {
   const urlParams = new URLSearchParams();
   urlParams.set("img", stripRoot);
   if (prefix) urlParams.set("prefix", prefix);
+  if (timer) urlParams.set("timer", timer);
   c.header("HX-Push-Url", `${base}?${urlParams.toString()}`);
-  return c.html(<Image base={base} src={stripRoot} prefix={prefix} />);
+  return c.html(
+    <Image base={base} src={stripRoot} prefix={prefix} timer={timer} />
+  );
 });
 
 app.get(`${base}/ref/random`, (c) => {
   console.log("HANDLE\t/ref/random");
   const img = c.req.query("img");
   const prefix = c.req.query("prefix");
-  
+  const timer = c.req.query("timer");
+
   // If specific image requested, show it
   if (img) {
     const imagePath = `${refroot}/${img}`;
@@ -166,10 +182,13 @@ app.get(`${base}/ref/random`, (c) => {
     const urlParams = new URLSearchParams();
     urlParams.set("img", img);
     if (prefix) urlParams.set("prefix", prefix);
+    if (timer) urlParams.set("timer", timer);
     c.header("HX-Push-Url", `${base}/ref?${urlParams.toString()}`);
-    return c.html(<Image base={base + "/ref"} src={img} prefix={prefix} />);
+    return c.html(
+      <Image base={base + "/ref"} src={img} prefix={prefix} timer={timer} />
+    );
   }
-  
+
   // Otherwise get random image
   const searchRoot = refroot + (prefix ? "/" + prefix : "");
   const image = recurseToImage(searchRoot);
@@ -181,8 +200,11 @@ app.get(`${base}/ref/random`, (c) => {
   const urlParams = new URLSearchParams();
   urlParams.set("img", stripRoot);
   if (prefix) urlParams.set("prefix", prefix);
+  if (timer) urlParams.set("timer", timer);
   c.header("HX-Push-Url", `${base}/ref?${urlParams.toString()}`);
-  return c.html(<Image base={base + "/ref"} src={stripRoot} prefix={prefix} />);
+  return c.html(
+    <Image base={base + "/ref"} src={stripRoot} prefix={prefix} timer={timer} />
+  );
 });
 
 export default {
