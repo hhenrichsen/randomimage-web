@@ -25,40 +25,53 @@ export default function App({
     <html>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://rsms.me/" />
+        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+        <style>{`
+          * { font-family: 'Inter', sans-serif; }
+          @supports (font-variation-settings: normal) {
+            * { font-family: 'Inter var', sans-serif; }
+          }
+        `}</style>
         <script
           src="https://unpkg.com/htmx.org@1.9.12"
           integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2"
           crossorigin="anonymous"
         ></script>
+        <script src="https://cdn.tailwindcss.com"></script>
         <script
-          src="https://cdn.jsdelivr.net/npm/@unocss/runtime@0.62.3/uno.global.min.js"
-          integrity="sha384-Yj8LgcKAtFfi5aWJk55wgVn9Hg/QgEATY8n1pPy6RkMlvLJrBDhF6fE0s1i3VuuZ"
-          crossorigin="anonymous"
-        ></script>
-        <script
+          defer
           src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.1/dist/cdn.min.js"
           integrity="sha384-1P3ccpD4L/9t6HWl43VEHcYRLuA3zlADdXoOEnvQOsZHH6caGISdjzrMQOBr4M4T"
           crossorigin="anonymous"
         ></script>
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@unocss/reset/normalize.min.css"
-        ></link>
       </head>
-      <body class="w-full h-full m-0 @dark:bg-slate-900 font-sans text-slate-900 @dark:text-slate-100 flex items-center flex-col">
+      <body class="w-full h-full m-0 dark:bg-zinc-900 font-sans text-zinc-900 dark:text-zinc-100 flex items-center flex-col p-4">
+        <style>{`
+          * {
+            -webkit-tap-highlight-color: transparent !important;
+          }
+          button, a {
+            outline: none !important; 
+            box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            --un-ring-width: 0px !important;
+            --un-ring-offset-width: 0px !important;
+          }
+          button:focus, button:focus-visible, button:active,
+          a:focus, a:focus-visible, a:active { 
+            outline: none !important; 
+            box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            --un-ring-width: 0px !important;
+            --un-ring-offset-width: 0px !important;
+          }
+        `}</style>
         <div
           class="flex items-center justify-center flex-1 w-full max-h-full flex-col"
           hx-get={initialUrl}
           hx-trigger="load"
         />
-        <button
-          hx-get={buildUrl(`${base}/random`, { prefix })}
-          hx-trigger="click"
-          hx-target="#image"
-          class="mt-2"
-        >
-          Random
-        </button>
       </body>
     </html>
   );
