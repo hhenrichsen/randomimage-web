@@ -68,9 +68,12 @@ export default function App({
           }
         `}</style>
         <div
+          id="image"
           class="flex items-center justify-center flex-1 w-full max-h-full flex-col"
           hx-get={initialUrl}
-          hx-trigger="load"
+          hx-trigger="load once"
+          hx-push-url="false"
+          hx-swap="outerHTML"
         />
       </body>
     </html>

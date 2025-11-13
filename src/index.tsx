@@ -248,11 +248,8 @@ app.get(`${base}/random`, (c) => {
     try {
       const imagePath = `${root}/${img}`;
       if (fs.existsSync(imagePath) && fs.statSync(imagePath).isFile()) {
-        const urlParams = new URLSearchParams();
-        urlParams.set("img", img);
-        if (prefix) urlParams.set("prefix", prefix);
-        if (timer) urlParams.set("timer", timer);
-        c.header("HX-Push-Url", `${base}?${urlParams.toString()}`);
+        // Don't push to history when showing a specific image that was requested
+        // (this happens on initial page load or history navigation)
         return c.html(
           <Image base={base} src={img} prefix={prefix} timer={timer} />
         );
@@ -396,11 +393,8 @@ app.get(`${base}/ref/random`, (c) => {
     try {
       const imagePath = `${refroot}/${img}`;
       if (fs.existsSync(imagePath) && fs.statSync(imagePath).isFile()) {
-        const urlParams = new URLSearchParams();
-        urlParams.set("img", img);
-        if (prefix) urlParams.set("prefix", prefix);
-        if (timer) urlParams.set("timer", timer);
-        c.header("HX-Push-Url", `${base}/ref?${urlParams.toString()}`);
+        // Don't push to history when showing a specific image that was requested
+        // (this happens on initial page load or history navigation)
         return c.html(
           <Image base={base + "/ref"} src={img} prefix={prefix} timer={timer} />
         );
